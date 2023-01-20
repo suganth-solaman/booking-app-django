@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View rooms</title>
+</head>
+<style>
+.create-box{
+    top:10%;
+    width:50%;
+    margin:auto;
+    border: 2px solid #7c8184;
+    border-radius: .5rem;
+}
+.side {
+  display: flex;
+}
+.partial{
+  left: 50%;
+  position: absolute;
+}
+
+.space{
+  padding:20px;
+}
+
+
+
+
+</style>
+<body>
+{% extends "home_page.html" %}
+{% block content %}
+<div class="top">
+    <div class="in">
+        <a href="{% url 'home' %}" class="active">
+            <i class="bi bi-arrow-left-square"></i>
+            <span style="opacity:0.75;" >Home</span>
+        </a>
+    </div>
+
+</div>
+<div class="addpro"   >
+
+ <div  class="col-xs-4">
+    {% for pro in room%}
+     {% for num,pic in photo.items %}
+      {%if num == pro.id %}
+    <div class="box-im mx-auto mb-3">
+    <img src="{{pic.url}}" height="262" class="image-thumbnail" alt="..." style=" width: 18rem;padding:2rem;">
+        <p class="nameing" style=""><i class="bi bi-building"></i> {{pro.name}} </p>
+        <p class="nameing" ><i class="bi bi-geo-alt"></i>  {{pro.location}} </p>
+
+        <a href="{% url 'details_view' pro.id %}" class="btn btn-outline-dark btn-sm m-1" style=" width: 18rem;height: 35px;">view</a>
+    </div>
+     {%endif%}
+     {%endfor%}
+     {%empty%}
+     <header>Location not Avalible. Try another location</header>
+     {%endfor%}
+
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

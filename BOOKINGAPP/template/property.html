@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Property</title>
+</head>
+<body>
+{% extends "home_page.html" %}
+{% block content %}
+
+<div class="top">
+    <div class="in">
+        <a href="{% url 'home' %}" class="active">
+            <i class="bi bi-arrow-left-square"></i>
+            <span style="opacity:0.75;" >Home</span>
+        </a>
+    </div>
+    <div class="inright" >
+        <a href="{% url 'add_property' %}" class="active">
+            <i class="bi bi-plus-square"></i>
+            <span style="opacity:0.75;" >Add</span>
+        </a>
+    </div>
+</div>
+
+ {% for msg in messages%}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Hi!</strong> {{msg}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+         {% endfor %}
+<div class="addpro"   >
+
+ <div  class="col-xs-4">
+    {% for pro in room%}
+     {% for num,pic in photo.items %}
+      {%if num == pro.id %}
+    <div class="box-im mx-auto mb-3">
+    <img src="{{pic.url}}" height="262" class="image-thumbnail" alt="..." style=" width: 18rem;padding:2rem;">
+        <p class="nameing" style=""><i class="bi bi-building"></i> {{pro.name}} </p>
+        <p class="nameing" ><i class="bi bi-geo-alt"></i>  {{pro.location}} </p>
+
+        <a href="{% url 'details_view' pro.id %}" class="btn btn-outline-dark btn-sm m-1" style=" width: 18rem;height: 35px;">view</a>
+          <a href="{% url 'edit' pro.id %}" class="btn btn-outline-success btn-sm m-1" style=" width: 18rem;height: 35px;">Edit</a>
+          <a href="{% url 'delete' pro.id %}" class="btn btn-outline-danger btn-sm m-1" style=" width: 18rem;height: 35px;">Delete</a>
+
+    </div>
+     {%endif%}
+     {%endfor%}
+     {%empty%}
+     <header>You haven't add a property, click add icon and add property</header>
+     {%endfor%}
+
+</div>
+</div>
+
+<script>
+
+</script>
+{% endblock %}
+</body>
+</html>

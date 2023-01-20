@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add property</title>
+</head>
+<style>
+.create-box{
+    top:10%;
+    width:50%;
+    margin:auto;
+    border: 2px solid #7c8184;
+    border-radius: .5rem;
+}
+.side {
+  display: flex;
+}
+.partial{
+  left: 50%;
+  position: absolute;
+}
+
+.space{
+  padding:20px;
+}
+
+
+
+
+</style>
+<body>
+{% extends "home_page.html" %}
+{% block content %}
+
+<div class="top">
+    <div class="in">
+        <a href="{% url 'home' %}" class="active">
+            <i class="bi bi-arrow-left-square"></i>
+            <span style="opacity:0.75;" >Home </span>
+        </a>
+    </div>
+
+</div>
+
+{%if request.path == "/add_property" %}
+<form class="addpro"  method='POST' action="" enctype="multipart/form-data" >
+
+    <div class="create-box">
+      <div class="space form-group">
+        <label>Room name</label>
+        <input class="form-control" id="roomname1" name="roomname1"  placeholder="Enter room name" required>
+      </div>
+         <div class="spacer form-group"></div>
+      <div class="space form-group">
+        <label>Location</label>
+        <input class="form-control" id="location1" name="location1"  placeholder="Enter Location " required>
+      </div>
+         <div class="spacer form-group"></div>
+      <div class="space form-group">
+        <label>Persons</label>
+        <input type="number" class="form-control" id="guest1"  name="guest1" placeholder="Number of persons allowed" min="1" max="10" required>
+      </div>
+         <div class="spacer form-group"></div>
+      <div class="space form-group">
+        <label class="partial">From</label><label >To</label>
+        <div class="side form-group" >
+        <input type="date" class="cal form-control" id="Avail-from1" name="Avail-from1" placeholder="Enter " required>
+        <input type="date" class="cal form-control" id="Avail-to1"  name="Avail-to1" placeholder="Enter " required>
+        </div>
+           <div class="spacer form-group"></div>
+      </div>
+        <div class="space form-group">
+        <label>Floor size</label>
+        <input type="text" class="form-control" id="floor"  name="floor1" placeholder="Enter floor size "  required>
+      </div>
+        <div class="space form-group">
+        <label>Number of beds</label>
+        <input type="number" class="form-control" id="beds"  name="beds1" placeholder="Number of beds" min="1" max="10" required>
+      </div>
+        <div class="space form-group">
+        <label>Amenities</label>
+        <input type="text" class="form-control" id="Amenities"  name="Amenities1" placeholder="Amenities"  required>
+      </div>
+        <div class="space form-group">
+        <label>Amenities</label>
+        <input type="number" class="form-control" id="price"  name="Price1" placeholder="Price per day"  required>
+      </div>
+        <div class="space form-group">
+        <label>upload pictures</label>
+            <div class="picture  form-group">
+                 <input required name="images" type="file" id="image1" multiple class="form-control-file mb-2">
+            </div>
+
+            <div class="in-di">
+                <icon  class="addpic btn btn-success"  > <i class=" bi-plus-lg"></i> Picture </icon>
+
+            </div>
+
+      </div>
+    </div>
+    <div class="space form-group" style="text-align:center">
+        <button type="submit"  class="btn btn-primary" style=" left:30%;" > Submit </button>
+    </div>
+
+</form>
+{%else%}
+
+<form class="addpro"  method='POST' action="" enctype="multipart/form-data" >
+
+    <div class="create-box">
+      <div class="space form-group">
+        <label>Room name</label>
+        <input class="form-control" id="roomname" name="roomname1"  placeholder="Enter room name" value="{{own.name}}" required>
+      </div>
+         <div class="spacer form-group"></div>
+      <div class="space form-group">
+        <label>Location</label>
+        <input class="form-control" id="location" name="location1"  placeholder="Enter Location " value="{{own.location}}" required>
+      </div>
+         <div class="spacer form-group"></div>
+      <div class="space form-group">
+        <label>Persons</label>
+        <input type="number" class="form-control" id="guest"  name="guest1" placeholder="Number of persons allowed" min="1" max="10" value="{{own.details.guest}}" required>
+      </div>
+         <div class="spacer form-group"></div>
+      <div class="space form-group">
+        <label class="partial">From</label><label >To</label>
+        <div class="side form-group" >
+        <input type="date" class="cal form-control" id="Avail-from" name="Avail-from1" placeholder="Enter " value="{{own.start_date}}" required>
+        <input type="date" class="cal form-control" id="Avail-to"  name="Avail-to1" placeholder="Enter " value="{{own.end_date}}" required>
+        </div>
+           <div class="spacer form-group"></div>
+      </div>
+        <div class="space form-group">
+        <label>Floor size</label>
+        <input type="text" class="form-control" id="floor1"  value="{{own.details.floor}}"  name="floor1" placeholder="Enter floor size "  required>
+      </div>
+        <div class="space form-group">
+        <label>Number of beds</label>
+        <input type="number" class="form-control" id="beds1"  value="{{own.details.bed}}"  name="beds1" placeholder="Number of beds" min="1" max="10" required>
+      </div>
+        <div class="space form-group">
+        <label>Amenities</label>
+        <input type="text" class="form-control" id="Amenities1" value="{{own.details.amenity}}"  name="Amenities1" placeholder="Amenities"  required>
+      </div>
+        <div class="space form-group">
+        <label>Price</label>
+        <input type="number" class="form-control" id="price1"  value="{{own.details.price}}"   name="Price1" placeholder="Price per day"  required>
+      </div>
+
+    <div class="space form-group" style="text-align:center">
+        <button type="submit"  class="btn btn-primary" style=" left:30%;" > Submit </button>
+    </div>
+
+</form>
+{%endif%}
+
+<script>
+    $(document).ready(function(){
+    Date.prototype.yyyymmdd = function() {
+      var yyyy = this.getFullYear().toString();
+      var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+      var dd  = this.getDate().toString();
+      return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+    };
+
+    var date = new Date();
+    var today = String(date.yyyymmdd())
+    var end = parseInt(today.slice(5,7))+1;
+    console.log(end);
+    if(end == 13){
+        end = 1;
+    }
+    if (end < 10){
+        end = "0"+end;
+    }
+    end = today.slice(0,5)+end+today.slice(7,12)
+     console.log(end,"hi");
+    $('.cal').attr('min',today);
+    $('.cal').attr('max',end);
+
+
+            var num=1;
+            $(".addpic").on("click", function(){
+                if($(".repic").length==0){
+                    var $section = $('<icon  class="repic btn btn-danger"  > <i class="bio bi-dash-lg"></i> remove </icon>')
+                    $('.in-di').append($section)
+                }
+                ++num;
+                var old = $("#image1").clone();
+                $(old).attr('id',"image"+num)
+                $(".picture").append(old)
+
+
+            $(".repic").off().on("click", function(){
+                console.log(num);
+                if(num==2){
+
+
+                    $(".repic").remove();
+                }
+                var old = $("#image"+num).remove();
+                --num;
+                return;
+             });
+
+            });
+
+
+    });
+
+</script>
+{% endblock %}
+
+</body>
+</html>

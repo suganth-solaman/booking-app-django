@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign</title>
+</head>
+<style>
+.create-box{
+    top:10%;
+    width: 75%;
+    margin: auto;
+    border: 2px solid #7c8184;
+    border-radius: .5rem;
+}
+.side {
+  display: flex;
+}
+.partial{
+  left: 50%;
+  position: absolute;
+}
+
+.space{
+  padding:10px;
+}
+label,.active{
+  color: #353535;
+  line-height: 50px;
+  border-left: 5px solid transparent;
+  font-family: 'Lato', sans-serif;
+  transition: all .5s ease;
+  letter-spacing: 1px;
+
+}
+.active:hover{
+    color:red;
+}
+
+</style>
+<body>
+{% extends "home_page.html" %}
+{% block content %}
+
+<div class="top">
+    <div class="in">
+        <a href="{% url 'home' %}" class="active">
+            <i class="bi bi-arrow-left-square"></i>
+            <span style="opacity:0.75;" >Home</span>
+        </a>
+    </div>
+    <div class="inright" >
+        <a href="#" class="active" id="signin" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span style="opacity:0.75;"  >Login</span>
+        </a>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+          <form action="/sign_in" method="POST">
+          <div class="modal-body">
+                <div class="space form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="@username " required>
+              </div>
+               <div class="space form-group">
+                <label>Password</label>
+                <input class="form-control" type="password" id="password" name="password"  placeholder="Password " required>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button  class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+{% for msg in messages%}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Hi!</strong> {{msg}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% if form %}
+<form  method="post" class="addpro">
+    <div class="create-box">
+      <div class="space form-group">
+        <label>Username</label>
+        {{form.username}}
+      </div>
+      <div class="space form-group">
+        <label>Email</label>
+        {{form.email}}
+      </div>
+      <div class="space form-group">
+        <label>Phone</label>
+        {{form.phone}}
+      </div>
+      <div class="space form-group">
+           <label> Guest / Owner</label>
+          <select class="form-select" aria-label="Default select example" name="staff" id="staff">
+              <option value="1">Guest</option>
+              <option value="2">Owner</option>
+          </select>
+      </div>
+      <div class="space form-group">
+        <label>Password</label>
+        {{form.password1}}
+      </div>
+      <div class="space form-group">
+        <label>Confirm password</label>
+        {{form.password2}}
+      </div>
+    </div>
+      <div class="space form-group" style="text-align:center">
+        <button  class="addpic btn btn-primary" style=" left:30%;" > Submit </button>
+    </div>
+</form>
+{%else%}
+<form class="addpro" action="/sign_in" method="POST">
+  <div class="create-box">
+        <div class="space form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="@username " required>
+      </div>
+       <div class="space form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" id="password" name="password"  placeholder="Password " required>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button  class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+{% endif %}
+
+<script>
+
+</script>
+{% endblock %}
+
+</body>
+</html>
