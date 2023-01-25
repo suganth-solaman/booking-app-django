@@ -23,9 +23,6 @@ def own_property(request):
     for room in house:
         image = Photo.objects.filter(property=room)
         pic[room.id] = image[0].photo
-    print(pic, "hi")
-    #     for j in image:
-    #         print(type(j.photo))
     context = {"room": house, "photo": pic}
     return render(request,"property.html",context )
 
@@ -40,7 +37,6 @@ def add_property(request):
         enDate = data['Avail-to1']
         detail = {"guest":data['guest1'], "floor":data['floor1'], "bed":data['beds1'], "amenity":data['Amenities1'], "price":data['Price1'] }
         room = Property.objects.create(user=user_data, name=roomName, location=Location, start_date=startData, end_date=enDate, details=detail )
-        print(room, room.id)
         image = request.FILES.get("images")
         all_image = dict(request.FILES)
         for pic in all_image['images']:
@@ -58,27 +54,21 @@ def rooms(request):
     for room in house:
         image = Photo.objects.filter(property =room)
         pic[room.id] = image[0].photo
-    print(pic,"hi")
-
     context = {"room":house,"photo":pic}
     return render(request,'view_rooms.html', context)
 
 @login_required(login_url='sign_up')
 def details_view(request,pk):
     image = Photo.objects.filter(property__id=pk)
-    print(image[0].photo)
     if request.method == 'POST':
-        print(request.POST)
-        s =request.POST['Avail-from1']
-        e =request.POST['Avail-to1']
+        s = request.POST['Avail-from1']
+        e = request.POST['Avail-to1']
         s = s.split("-")
         e = e.split("-")
         d0 = date(int(s[0]), int(s[1]), int(s[2]))
         d1 = date(int(e[0]), int(e[1]), int(e[2]))
         delta = d1 - d0
         price = delta.days * int(image[0].property.details['price'])
-        print(price,"rs")
-        print(e,"dfasdfadf")
         booking_date = date.today().strftime("%m/%d/%Y")
         detail = {"booking_date":booking_date,"start":request.POST['Avail-from1'], "end":request.POST['Avail-to1'], "price":price}
         guest = Book.objects.create(user=request.user, property=image[0].property,details=detail)
@@ -90,7 +80,6 @@ def details_view(request,pk):
 @login_required(login_url='sign_up')
 def history(request):
     guest = Book.objects.filter(user=request.user)
-    print(guest)
     return render(request,"history.html",{"guest":guest})
 
 @login_required(login_url='sign_up')
@@ -109,7 +98,6 @@ def edit(request,pk):
         own.save()
         messages.success(request, " Updated successfully! ")
         return redirect('home')
-        print(request.POST)
     return render(request, 'add_property.html',{"own":own})
 
 @login_required(login_url='sign_up')
@@ -122,13 +110,11 @@ def delete(request, pk):
 def search(request):
     if request.method == 'POST':
         data = request.POST
-        searcher = Property.objects.filter(location=data['Location'])
+        searcher = Property.objects.filter(location=data['Location'].lower())
         pic = {}
         for room in searcher:
             image = Photo.objects.filter(property=room)
             pic[room.id] = image[0].photo
-        print(data, "hi")
-
     context = {"room": searcher, "photo": pic}
     return render(request, 'view_rooms.html', context)
 
